@@ -1,14 +1,10 @@
-
-
-import { CreationOptional, DataTypes, Model } from "sequelize";
+import { CreationOptional, DataTypes, Model } from 'sequelize';
 import db from '.';
-import { Iteams } from "../../Interfaces/ITeams";
-
+import { Iteams } from '../../Interfaces/ITeams';
 
 export default class Teams extends Model<Iteams> {
   declare id: CreationOptional<number>;
-  declare team_name: string;
-
+  declare teamName: string;
 }
 
 Teams.init({
@@ -18,14 +14,13 @@ Teams.init({
     primaryKey: true,
     autoIncrement: true,
   },
-  team_name: {
+  teamName: {
     type: DataTypes.STRING,
     allowNull: false,
-
+    field: 'team_name',
   },
 }, {
   sequelize: db,
   tableName: 'teams',
   timestamps: false,
 });
-
