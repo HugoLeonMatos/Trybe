@@ -1,9 +1,16 @@
-import { CreationOptional, DataTypes, Model } from 'sequelize';
+import {
+  DataTypes,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from 'sequelize';
 import db from '.';
-import { Iteams } from '../../Interfaces/ITeams';
 
-export default class Teams extends Model<Iteams> {
+class Teams extends Model<InferAttributes<Teams>,
+InferCreationAttributes<Teams>> {
   declare id: CreationOptional<number>;
+
   declare teamName: string;
 }
 
@@ -19,8 +26,11 @@ Teams.init({
     allowNull: false,
     field: 'team_name',
   },
+
 }, {
   sequelize: db,
-  tableName: 'teams',
+  modelName: 'teams',
   timestamps: false,
 });
+
+export default Teams;
