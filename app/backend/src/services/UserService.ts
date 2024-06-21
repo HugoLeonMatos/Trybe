@@ -1,27 +1,35 @@
-// import * as  bcrypt from 'bcryptjs';
-// import { JwtUtils } from '../utils/JwtUtils';
-// import { ServiceResponse } from '../Interfaces/ServiceResponse';
-// import { ILogin } from '../Interfaces/users/IUser';
-// import Users from '../database/models/Users';
+import * as bcrypt from 'bcryptjs';
 
-// type TokenResponsePayload = {
-//   token: string
-// }
-// export default class UserService {
-//   constructor(
-//     private Model = Users,
-//   ) { }
+import { ServiceResponse } from '../Interfaces/ServiceResponse';
+import Users from '../database/models/Users';
+import JwtUtils from '../utils/JwtUtils';
+import { ILogin } from '../Interfaces/users/IUser';
 
-//   public async login(payload: ILogin): Promise<ServiceResponse<TokenResponsePayload>> {
-//     const { email, password } = payload;
-//     const user = await this.Model.findOne({ where: { email } });
+type TokenResponsePayload = {
+  token: string
+};
+export default class UserService {
+  constructor(
+    private Model = Users,
+  ) { }
 
-//     if (!user) {
-//       return { status: 'NOT_FOUND', data: { message: 'All fields must be filled' } }
-//     }
+  public async login(payload: ILogin): Promise<ServiceResponse<TokenResponsePayload>> {
+    const { email, password } = payload;
+    const user = await this.Model.findOne({ where: { email } });
 
-//     const isValidPassword = await bcrypt.compare(payload.password, user.password);
+    if (!user) {
+      return { status: 'NOT_FOUND', data: { message: 'All fields must be filled' } };
+    }
 
-//     const token = JwtUtils.generateToken({id: user.id});
-//   }
-// }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return {
+        status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' },
+      };
+    }
+
+    const token = JwtUtils.generateToken({ id: user.id });
+
+    return { status: 'SUCCESSFUL', data: { token } };
+  }
+}
