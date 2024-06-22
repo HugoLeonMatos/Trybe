@@ -1,5 +1,3 @@
-import * as jwt from 'jsonwebtoken';
-
 import { RequestHandler } from 'express';
 import JwtUtils from '../utils/JwtUtils';
 
