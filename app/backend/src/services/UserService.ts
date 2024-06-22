@@ -8,6 +8,9 @@ import { ILogin } from '../Interfaces/users/IUser';
 type TokenResponsePayload = {
   token: string
 };
+// type role = {
+//   role: object
+// };
 export default class UserService {
   constructor(
     private Model = Users,
@@ -22,7 +25,7 @@ export default class UserService {
     }
 
     const isValidPassword = await bcrypt.compare(password, user.dataValues.password);
-    console.log('isvalid', isValidPassword);
+    console.log('user', user.dataValues.role);
 
     if (!isValidPassword) {
       return {
@@ -33,5 +36,16 @@ export default class UserService {
     const token = JwtUtils.generateToken({ id: user.id });
 
     return { status: 'SUCCESSFUL', data: { token } };
+  }
+
+  public async findRole(id: number): Promise<ServiceResponse<object>> {
+    const user = await this.Model.findByPk(id);
+    const role = user?.dataValues.role;
+
+    // if (!user) {
+    //   return { status: 'NOT_FOUND', data: { message: 'error' } };
+    // }
+
+    return { status: 'SUCCESSFUL', data: { role } };
   }
 }
