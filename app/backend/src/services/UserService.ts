@@ -18,10 +18,12 @@ export default class UserService {
     const user = await this.Model.findOne({ where: { email } });
 
     if (!user) {
-      return { status: 'NOT_FOUND', data: { message: 'All fields must be filled' } };
+      return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, user.dataValues.password);
+    console.log('isvalid', isValidPassword);
+
     if (!isValidPassword) {
       return {
         status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' },
