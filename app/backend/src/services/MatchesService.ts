@@ -1,6 +1,6 @@
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import Matches from '../database/models/Matches';
-import IMatches from '../Interfaces/IMatches';
+import IMatches, { IMatchesGoals } from '../Interfaces/IMatches';
 import Teams from '../database/models/Teams';
 
 export default class MatchesService {
@@ -75,5 +75,19 @@ export default class MatchesService {
       return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
     }
     return { status: 'SUCCESSFUL', data: { message: 'Match already finished' } };
+  }
+
+  public async updateGoalsMatch(id: string, body: IMatchesGoals): Promise<ServiceResponse<object>> {
+    const { homeTeamGoals, awayTeamGoals } = body;
+    // console.log('homegoals', homeTeamGoals, 'awaygoals', awayTeamGoals, 'id', id);
+
+    const affectedRows = await this.Model
+      .update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+    // console.log('matchId', MatchId);
+    // return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
+    if (affectedRows[0] === 1) {
+      return { status: 'SUCCESSFUL', data: { message: 'gols atualizados' } };
+    }
+    return { status: 'SUCCESSFUL', data: { message: 'gols ja foram atualizados' } };
   }
 }

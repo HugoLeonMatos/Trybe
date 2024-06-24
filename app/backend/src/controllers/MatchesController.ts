@@ -33,4 +33,13 @@ export default class MatchesController {
     const serviceResponse = await this.matchesService.finalizedMatchId(id);
     return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
   }
+
+  public async updatedGoals(req: Request, res: Response): Promise<Response> {
+    // const { id } = req.params;
+    // const { body } = req;
+    // console.log('id', id);
+    console.log('body', (req.body));
+    const serviceResponse = await this.matchesService.updateGoalsMatch(req.params.id, req.body);
+    return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
+  }
 }

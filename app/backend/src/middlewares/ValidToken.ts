@@ -10,7 +10,7 @@ const validToken: RequestHandler = async (req, res, next) => {
   try {
     // const user = jwt.verify(extractToken, process.env.JWT_SECRET as string);
     const user = JwtUtils.verify(extractToken);
-    req.body = user;
+    req.body.user = user;
     req.body = { ...req.body, user };
     // console.log('passei aqui', user);
     next();
