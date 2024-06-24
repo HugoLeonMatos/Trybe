@@ -8,7 +8,7 @@ import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
 import Teams from '../database/models/Teams';
-import { team, teams } from '../mocks'
+import { team, teams } from './mocks'
 
 chai.use(chaiHttp);
 
