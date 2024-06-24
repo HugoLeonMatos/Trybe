@@ -12,7 +12,7 @@ const validToken: RequestHandler = async (req, res, next) => {
     const user = JwtUtils.verify(extractToken);
     req.body = user;
     req.body = { ...req.body, user };
-    console.log('passei aqui', user);
+    // console.log('passei aqui', user);
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Token must be a valid token' });

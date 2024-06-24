@@ -66,4 +66,14 @@ export default class MatchesService {
 
     return { status: 'SUCCESSFUL', data: matchesFiltered };
   }
+
+  public async finalizedMatchId(id: string): Promise<ServiceResponse<object>> {
+    const affectedRows = await this.Model.update({ inProgress: false }, { where: { id } });
+    // console.log('matchId', MatchId);
+    // return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
+    if (affectedRows[0] === 1) {
+      return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
+    }
+    return { status: 'SUCCESSFUL', data: { message: 'Match already finished' } };
+  }
 }

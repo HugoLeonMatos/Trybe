@@ -25,7 +25,7 @@ export default class UserService {
     }
 
     const isValidPassword = await bcrypt.compare(password, user.dataValues.password);
-    console.log('user', user.dataValues.role);
+    // console.log('user', user.dataValues.role);
 
     if (!isValidPassword) {
       return {
