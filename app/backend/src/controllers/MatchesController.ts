@@ -9,7 +9,8 @@ export default class MatchesController {
 
   public async getAllMatches(req: Request, res: Response): Promise<Response> {
     const { inProgress } = req.query;
-    const serviceResponse = await this.matchesService.getFilteredMatchesProgress(String(inProgress));
+    const serviceResponse = await this.matchesService
+      .getFilteredMatchesProgress(String(inProgress));
     return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
   }
 
