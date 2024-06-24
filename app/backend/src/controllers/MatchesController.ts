@@ -35,11 +35,12 @@ export default class MatchesController {
   }
 
   public async updatedGoals(req: Request, res: Response): Promise<Response> {
-    // const { id } = req.params;
-    // const { body } = req;
-    // console.log('id', id);
-    console.log('body', (req.body));
     const serviceResponse = await this.matchesService.updateGoalsMatch(req.params.id, req.body);
+    return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
+  }
+
+  public async inputMatch(req: Request, res: Response): Promise<Response> {
+    const serviceResponse = await this.matchesService.inputMatch(req.body);
     return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
   }
 }

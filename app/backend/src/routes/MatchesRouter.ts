@@ -9,15 +9,21 @@ const router = Router();
 router.get('/', (req, res) => matchesController.getAllMatches(req, res));
 
 router.patch(
+  '/:id/finish',
+  validToken,
+  (req, res) => matchesController.finalizedMatch(req, res),
+);
+
+router.patch(
   '/:id',
   validToken,
   (req, res) => matchesController.updatedGoals(req, res),
 );
 
-router.patch(
-  '/:id/finish',
+router.post(
+  '/',
   validToken,
-  (req, res) => matchesController.finalizedMatch(req, res),
+  (req, res) => matchesController.inputMatch(req, res),
 );
 
 export default router;
