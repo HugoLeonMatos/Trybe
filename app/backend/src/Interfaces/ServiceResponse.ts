@@ -8,7 +8,7 @@ export type ServiceResponseError = {
 };
 
 export type ServiceResponseSuccess<T> = {
-  status: 'SUCCESSFUL' | 'CREATED',
+  status: 'SUCCESSFUL' | 'CREATED' | 'UNPROCESSABLE_ENTITY',
   data: T
 };
 

@@ -2,10 +2,12 @@ import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import Matches from '../database/models/Matches';
 import IMatches, { IMatcheCreated, IMatchesGoals } from '../Interfaces/IMatches';
 import Teams from '../database/models/Teams';
+import { messgeError } from '../utils/mapStatusHTTP';
 
 export default class MatchesService {
   constructor(
     private Model = Matches,
+    private TeamsModel = Teams,
   ) { }
 
   // public async getAllMatches(inProgress: string): Promise<ServiceResponse<IMatches[]>> {
@@ -88,6 +90,15 @@ export default class MatchesService {
   }
 
   public async inputMatch(body: IMatcheCreated): Promise<ServiceResponse<object>> {
+    const findTeamHome = await this.TeamsModel.findByPk(body.homeTeamId);
+    const findTeamAway = await this.TeamsModel.findByPk(body.awayTeamId);
+    if (body.homeTeamId === body.awayTeamId) {
+      return { status: 'UNPROCESSABLE_ENTITY', data: { message: messgeError } };
+    } if (!findTeamHome || !findTeamAway) {
+      return {
+        status: 'NOT_FOUND', data: { message: 'There is no team with such id!' },
+      };
+    }
     const affectedRows = await this.Model.create({ ...body, inProgress: true });
     return { status: 'CREATED', data: affectedRows };
   }
