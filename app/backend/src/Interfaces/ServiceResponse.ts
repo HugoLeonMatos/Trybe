@@ -1,4 +1,4 @@
-export type ServiceMessage = { message: string };
+export type ServiceMessage = { message: string } | any;
 
 type ServiceResponseErrorType = 'INVALID_DATA' | 'UNAUTHORIZED' | 'NOT_FOUND' | 'CONFLICT';
 

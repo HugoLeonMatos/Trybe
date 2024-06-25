@@ -20,4 +20,11 @@ export default class TeamService {
     if (!team) return { status: 'NOT_FOUND', data: { message: `team ${id} not found` } };
     return { status: 'SUCCESSFUL', data: team };
   }
+
+  // public async getTeamByIdLeaderboard(id: number): Promise<any> {
+  //   const team = await this.Model.findByPk(id);
+  //   if (!team) return { status: 'NOT_FOUND', data: { message: `team ${id} not found` } };
+  //   const { teamName } = team;
+  //   return { teamName };
+  // }
 }

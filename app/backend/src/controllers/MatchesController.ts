@@ -14,20 +14,6 @@ export default class MatchesController {
     return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
   }
 
-  // public async getFilteredMatches(_req: Request, res: Response): Promise<Response> {
-  // const inProgressString = _req.query.inProgress;
-  // let inProgress: boolean;
-  // if (typeof inProgressString === 'string') {
-  //   inProgress = inProgressString === 'true';
-  // } else {
-  //   inProgress = false;
-  // }
-  // if (_req.query.inProgress) {
-  //   const serviceResponse = await this.matchesService.getFilterMatchesProgress(_req.query.inProgress === 'true');
-  // }
-  // const serviceResponse = await this.matchesService.getFilterMatchesProgress(inProgress);
-  // return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
-  // }
   public async finalizedMatch(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const serviceResponse = await this.matchesService.finalizedMatchId(id);
